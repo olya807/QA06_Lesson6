@@ -1,32 +1,35 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import io.github.bonigarcia.wdm.config.DriverManagerType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import baseEntities.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProductsPage;
 
-import java.sql.DriverManager;
-
-public class SmokeTest {
+public class SmokeTest extends BaseTest {
 
     @Test
-    public void positiveLoginTest(){
+    public void positiveLoginTest() {
 
-        WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
-        WebDriver driver = new ChromeDriver();
-
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, true);
         loginPage.setUserName("standard_user");
         loginPage.setPassword("secret_sauce");
         loginPage.clickLoginButton();
 
-        ProductsPage productsPage = new ProductsPage(driver);
+        ProductsPage productsPage = new ProductsPage(driver, false);
         Assert.assertEquals(productsPage.getTitleText(), "PRODUCTS", "'Products' page is not opened.");
+    }
 
-        driver.quit();
+    @Test
+    public void negativeTest() {
+
+        LoginPage loginPage = new LoginPage(driver, true);
+        loginPage.setUserName("sadfasf");
+        loginPage.setPassword("cvbjfg");
+        loginPage.clickLoginButton();
+
+        Assert.assertEquals(loginPage.getErrorLabel().getText(),
+                "Epic sadface: Username and password do not match any user in this service"
+        );
     }
 }
