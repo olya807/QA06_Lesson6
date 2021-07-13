@@ -14,7 +14,7 @@ public abstract class BasePage {
     public BasePage(WebDriver driver, boolean openPageByUrl) {
         this.driver = driver;
 
-        if (openPageByUrl == true)
+        if (openPageByUrl)
             openPage();
 
         waitForOpen();
