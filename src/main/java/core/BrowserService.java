@@ -10,7 +10,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class BrowserService {
 
     private ReadProperties properties = new ReadProperties();
-    private WebDriver driver = null;
+    private WebDriver driver;
 
     public BrowserService() {
 
