@@ -1,0 +1,9 @@
+{
+  "announcement": "test",
+  "completed_on": 15.46,
+  "id": 1,
+  "is_completed": false,
+  "name": "Datahub",
+  "show_announcement": true,
+  "url": "http:///testrail/index.php?/projects/overview/1"
+}
