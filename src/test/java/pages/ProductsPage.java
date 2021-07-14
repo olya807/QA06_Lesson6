@@ -10,6 +10,7 @@ public class ProductsPage extends BasePage {
 
     private final static String endpoint = "inventory.html";
     private final static By title_Label_By = By.className("title");
+    private final static String product_AddToCart_Button = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button";
 
     public ProductsPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
@@ -37,5 +38,15 @@ public class ProductsPage extends BasePage {
 
     public String getTitleText() {
         return getTitleLabel().getText();
+    }
+
+    public WebElement getAddToCartButtonForProduct(String productName){
+
+        return driver.findElement(By.xpath(product_AddToCart_Button.replace("text_to_replace", productName)));
+    }
+
+    public void addToCart(String productName){
+
+        getAddToCartButtonForProduct(productName).click();
     }
 }
