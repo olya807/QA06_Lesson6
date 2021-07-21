@@ -38,7 +38,7 @@ public class LoginPage extends BasePage {
     //Getters
 
     public WebElement getUsernameInputBy() {
-        return driver.findElement(username_Input_By);
+        return waits.waitForVisibility(username_Input_By);
     }
 
     public WebElement getPasswordInputBy() {

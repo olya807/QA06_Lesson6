@@ -1,12 +1,17 @@
 package tests;
 
-import baseEntities.BaseTest;
+import baseEntities.BasePage;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.util.List;
 
-public class HomeTask_12 extends BaseTest {
+public class HomeTask_12 extends BasePage {
+
+    public HomeTask_12(WebDriver driver, boolean openPageByUrl) {
+        super(driver, openPageByUrl);
+    }
 
     @Test
     public void simpleAlertTest() {
@@ -72,7 +77,7 @@ public class HomeTask_12 extends BaseTest {
         WebElement iFrame = waits.waitForVisibility(By.xpath("//iframe[@class= 'modal-iframe']"));
         driver.switchTo().frame(iFrame);
 
-        List<WebElement> productTitle = waits.waitForVisibility(By.className("product__title-link"));
+        List<WebElement> productTitle = waits.waitForVisibilityAllElements(By.className("product__title-link"));
         String firstElementText = productTitle.get(0).getText();
 
         search.clear();
@@ -107,7 +112,7 @@ public class HomeTask_12 extends BaseTest {
         simpleAlertButton.click();
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        Assert.assertTrue(waits.waitForNoAlert);
+        Assert.assertTrue(waits.waitForNoAlert());
     }
 
     @Test
@@ -119,7 +124,7 @@ public class HomeTask_12 extends BaseTest {
         waits.waitForAlert();
         Alert alert = driver.switchTo().alert();
         alert.dismiss();
-        Assert.assertTrue(waits.waitForNoAlert);
+        Assert.assertTrue(waits.waitForNoAlert());
     }
 
     @Test
@@ -145,5 +150,16 @@ public class HomeTask_12 extends BaseTest {
         alert.accept();
         WebElement textResult = waits.waitForVisibility(By.id("promtButton"));
         Assert.assertEquals(textResult.getText(), "You entered: Hello World!");
+    }
+
+
+    @Override
+    protected void openPage() {
+
+    }
+
+    @Override
+    public boolean isPageOpen() {
+        return false;
     }
 }
