@@ -19,6 +19,7 @@ public class BrowserService {
         switch (properties.getBrowser().toLowerCase()) {
 
             case "chrome":
+
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("disable-gpu");
                 chromeOptions.addArguments("start-maximized");
