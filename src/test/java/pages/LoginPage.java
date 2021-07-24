@@ -22,7 +22,7 @@ public class LoginPage extends BasePage {
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl());
+        driver.get(properties.getBaseUrl());
     }
 
     @Override
@@ -38,19 +38,19 @@ public class LoginPage extends BasePage {
     //Getters
 
     public WebElement getUsernameInputBy() {
-        return driver.findElement(username_Input_By);
+        return waits.waitForVisibility(username_Input_By);
     }
 
     public WebElement getPasswordInputBy() {
-        return driver.findElement(password_Input_By);
+        return waits.waitForVisibility(password_Input_By);
     }
 
     public WebElement getLoginButtonBy() {
-        return driver.findElement(login_Button_By);
+        return waits.waitForVisibility(login_Button_By);
     }
 
     public WebElement getErrorLabel() {
-        return driver.findElement(error_Label_By);
+        return waits.waitForVisibility(error_Label_By);
     }
 
 

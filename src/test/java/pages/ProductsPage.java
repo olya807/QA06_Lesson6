@@ -18,7 +18,7 @@ public class ProductsPage extends BasePage {
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl() + endpoint);
+        driver.get(properties.getBaseUrl() + endpoint);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ProductsPage extends BasePage {
 
     //Getters
     public WebElement getTitleLabel() {
-        return driver.findElement(title_Label_By);
+        return waits.waitForVisibility(title_Label_By);
     }
 
     public String getTitleText() {
@@ -42,7 +42,7 @@ public class ProductsPage extends BasePage {
 
     public WebElement getAddToCartButtonForProduct(String productName){
 
-        return driver.findElement(By.xpath(product_AddToCart_Button.replace("text_to_replace", productName)));
+        return waits.waitForVisibility(By.xpath(product_AddToCart_Button.replace("text_to_replace", productName)));
     }
 
     public void addToCart(String productName){
