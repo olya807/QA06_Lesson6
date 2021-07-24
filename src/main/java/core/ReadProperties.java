@@ -18,9 +18,9 @@ public class ReadProperties {
         }
     }
 
-    public String getUrl() {
+    public String getBaseUrl() {
 
-        return properties.getProperty("url");
+        return properties.getProperty("baseUrl");
     }
 
     public String getBrowser() {
