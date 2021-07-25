@@ -47,4 +47,9 @@ public class ReadProperties {
 
         return Boolean.parseBoolean(properties.getProperty("headless"));
     }
+
+    public String getWgetDownloadCommand() {
+
+        return properties.getProperty("wgetDownloadCommand");
+    }
 }

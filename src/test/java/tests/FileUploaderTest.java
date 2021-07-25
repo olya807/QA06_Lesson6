@@ -14,7 +14,7 @@ public class FileUploaderTest extends BaseTest {
 
         String fileName = "TestUpload.txt";
 
-        File file = new File("src/test/java/files/" + fileName);
+        File file = new File("src/test/java/files/uploads/" + fileName);
         String absolute = file.getAbsolutePath();
 
         FileUploaderPage fileUploaderPage = new FileUploaderPage(driver, true);

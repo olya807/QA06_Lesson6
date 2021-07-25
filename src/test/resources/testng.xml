@@ -6,6 +6,7 @@
             <class name="tests.DynamicControlsTest"/>
             <class name="tests.ContextMenuTest"/>
             <class name="tests.FileUploaderTest"/>
+            <class name="tests.DownloadFileTest"/>
         </classes>
     </test>
 </suite>
