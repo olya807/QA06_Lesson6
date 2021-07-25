@@ -1,3 +1,5 @@
+package tests;
+
 import baseEntities.BaseTest;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -9,9 +11,10 @@ import org.testng.annotations.Test;
 
 public class AdvancedElementsTest extends BaseTest {
 
-    /*@Test
+    @Test
     public void simpleAlertTest() {
-        driver.get();
+
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
         WebElement simpleAlertButton = driver.findElement(By.xpath("//button[. = 'Click for JS Alert']"));
         simpleAlertButton.click();
 
@@ -20,24 +23,43 @@ public class AdvancedElementsTest extends BaseTest {
         alert.accept();
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        WebElement resultLabel = wait.util(ExpectedConditions.visibilityOfAllElementsLocated(By.id("result")));
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
 
         Assert.assertEquals(resultLabel.getText(), "You successfully clicked an alert");
     }
 
     @Test
     public void mediumAlertTest() {
-        driver.get();
-        WebElement simpleAlertButton = driver.findElement(By.xpath("//button[. = 'Click for JS Alert']"));
+
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
+        WebElement simpleAlertButton = driver.findElement(By.xpath("//button[. = 'Click for JS Confirm']"));
         simpleAlertButton.click();
 
         Alert alert = driver.switchTo().alert();
         System.out.println(alert.getText());
+        alert.dismiss();
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
+
+        Assert.assertEquals(resultLabel.getText(), "You clicked: Cancel");
+    }
+
+    @Test
+    public void promptAlertTest() {
+
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
+        WebElement simpleAlertButton = driver.findElement(By.xpath("//button[. = 'Click for JS Prompt']"));
+        simpleAlertButton.click();
+
+        Alert alert = driver.switchTo().alert();
+        System.out.println(alert.getText());
+        alert.sendKeys("Test");
         alert.accept();
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        WebElement resultLabel = wait.util(ExpectedConditions.visibilityOfAllElementsLocated(By.id("result")));
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
 
-        Assert.assertEquals();
-    }*/
+        Assert.assertEquals(resultLabel.getText(), "You entered: Test");
+    }
 }
