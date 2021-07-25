@@ -8,15 +8,19 @@ import pages.DynamicControlsPage;
 public class DynamicControlsTest extends BaseTest {
 
     @Test
-    public void dynamicControlsTest() {
+    public void dynamicControlsTest1() {
 
         DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(driver, true);
 
         Assert.assertTrue(
                 dynamicControlsPage.getCheckBox().isDisplayed()
         );
+    }
 
-        ///
+    @Test(dependsOnMethods = "dynamicControlsTest1")
+    public void dynamicControlsTest2() {
+
+        DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(driver, false);
 
         dynamicControlsPage.getButtonRemove().click();
 
@@ -33,13 +37,20 @@ public class DynamicControlsTest extends BaseTest {
                 dynamicControlsPage.isCheckBoxInvisible(),
                 "CheckBox is visible."
         );
-
         Assert.assertTrue(
                 dynamicControlsPage.isInputDisabled(),
+                "Input is not disabled (my check)."
+        );
+        Assert.assertFalse(
+                dynamicControlsPage.getInput().isEnabled(),
                 "Input is not disabled."
         );
+    }
 
-        ///
+    @Test(dependsOnMethods = "dynamicControlsTest2")
+    public void dynamicControlsTest3() {
+
+        DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(driver, false);
 
         dynamicControlsPage.getButtonDisableOrEnable().click();
         String actualText = dynamicControlsPage.getInputMessage().getText();
@@ -52,6 +63,10 @@ public class DynamicControlsTest extends BaseTest {
         );
         Assert.assertFalse(
                 dynamicControlsPage.isInputDisabled(),
+                "Input is disabled (my check)."
+        );
+        Assert.assertTrue(
+                dynamicControlsPage.getInput().isEnabled(),
                 "Input is disabled."
         );
     }

@@ -3,8 +3,8 @@ package baseEntities;
 import core.BrowserService;
 import core.ReadProperties;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 
 public class BaseTest {
@@ -18,13 +18,13 @@ public class BaseTest {
         properties = new ReadProperties();
     }
 
-    @BeforeMethod
+    @BeforeClass
     public void setupMethod(){
 
         driver = new BrowserService().getDriver();
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDownMethod(){
 
         driver.quit();
