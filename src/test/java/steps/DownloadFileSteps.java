@@ -23,7 +23,7 @@ public class DownloadFileSteps extends BaseStep {
         File wgetPath = new File("src/main/java/utils/wget.exe").getAbsoluteFile();
         String wgetAbsolutePath = wgetPath.getAbsolutePath().replace("wget.exe", "wget");
 
-        String wgetCommand = properties.getWgetDownloadCommand().replace("wget", wgetAbsolutePath);
+        String wgetCommand = "cmd /c wget -P downloadDestinationPath ".replace("wget", wgetAbsolutePath);
 
         try {
             Process exec = Runtime.getRuntime().exec(
