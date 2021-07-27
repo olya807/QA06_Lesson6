@@ -6,7 +6,7 @@ import units.Waits;
 import java.util.List;
 
 public class UIElement implements WebElement {
-    private final By by;
+    private By by;
     private final WebDriver driver;
     private final WebElement webElement;
     private final JavascriptExecutor jsExecutor;
@@ -16,6 +16,15 @@ public class UIElement implements WebElement {
         this.by = by;
         this.driver = driver;
         this.webElement = driver.findElement(by);
+        this.jsExecutor = (JavascriptExecutor) driver;
+        this.waits = new Waits(driver);
+
+    }
+
+    public UIElement(WebDriver driver, WebElement webElement) {
+
+        this.driver = driver;
+        this.webElement = webElement;
         this.jsExecutor = (JavascriptExecutor) driver;
         this.waits = new Waits(driver);
 
@@ -124,5 +133,10 @@ public class UIElement implements WebElement {
 
     private void scrollIntoView() {
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", webElement);
+    }
+
+    public WebElement getParent() {
+
+        return (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].parentNode;", webElement);
     }
 }
