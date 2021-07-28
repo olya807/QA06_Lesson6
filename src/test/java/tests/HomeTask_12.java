@@ -1,56 +1,75 @@
 package tests;
 
-import baseEntities.BasePage;
+import baseEntities.BaseTest;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class HomeTask_12 extends BasePage {
-
-    public HomeTask_12(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
-    }
+public class HomeTask_12 extends BaseTest {
 
     @Test
-    public void simpleAlertTest() {
-        driver.get("http://the-intern.herokuapp.com/javascript_alerts");
+    public void simpleAlertTest() throws InterruptedException {
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
+        Thread.sleep(5000);
 
-        WebElement simpleAlertButton = waits.waitForVisibility(By.xpath("//button[.='Click for JS Alert']"));
+        WebElement simpleAlertButton = driver.findElement(By.xpath("//button[.='Click for JS Alert']"));
         simpleAlertButton.click();
+        Thread.sleep(2000);
 
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        WebElement textResult = waits.waitForVisibility(By.id("result"));
-        Assert.assertEquals(textResult.getText(), "You successfully clicked an Alert");
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
+
+        Assert.assertEquals(
+                resultLabel.getText(),
+                "You successfully clicked an alert"
+        );
     }
 
     @Test
-    public void mediumAlertTest() {
-        driver.get("http://the-intern.herokuapp.com/javascript_alerts");
+    public void mediumAlertTest() throws InterruptedException {
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
+        Thread.sleep(5000);
 
-        WebElement mediumAlertButton = waits.waitForVisibility(By.xpath("//button[.='Click for JS Confirm']"));
+        WebElement mediumAlertButton = driver.findElement(By.xpath("//button[.='Click for JS Confirm']"));
         mediumAlertButton.click();
+        Thread.sleep(2000);
 
         Alert alert = driver.switchTo().alert();
         alert.dismiss();
-        WebElement textResult = waits.waitForVisibility(By.id("result"));
-        Assert.assertEquals(textResult.getText(), "You clicked: Cancel");
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
+
+        Assert.assertEquals(
+                resultLabel.getText(),
+                "You clicked: Cancel"
+        );
     }
 
     @Test
-    public void highAlertTest() {
-        driver.get("http://the-intern.herokuapp.com/javascript_alerts");
+    public void hardAlertTest() throws InterruptedException {
+        driver.get("http://the-internet.herokuapp.com/javascript_alerts");
+        Thread.sleep(5000);
 
-        WebElement highAlertButton = waits.waitForVisibility(By.xpath("//button[.='Click for JS Prompt']"));
+        WebElement highAlertButton = driver.findElement(By.xpath("//button[.='Click for JS Prompt']"));
         highAlertButton.click();
+        Thread.sleep(2000);
 
         Alert alert = driver.switchTo().alert();
         alert.sendKeys("Hello World!");
         alert.accept();
-        WebElement textResult = waits.waitForVisibility(By.id("result"));
-        Assert.assertEquals(textResult.getText(), "You entered: Hello World!");
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("result")));
+
+        Assert.assertEquals(
+                resultLabel.getText(),
+                "You entered: Hello World!"
+        );
     }
 
     @Test
@@ -58,37 +77,50 @@ public class HomeTask_12 extends BasePage {
         driver.get("http://the-internet.herokuapp.com/iframe");
         driver.switchTo().frame("mce_0_ifr");
 
-        WebElement inputTextMessage = waits.waitForVisibility(By.tagName("p"));
+        WebElement inputTextMessage = driver.findElement(By.tagName("p"));
         inputTextMessage.clear();
         inputTextMessage.sendKeys("Hello World!");
 
         driver.switchTo().defaultContent();
 
-        WebElement button = waits.waitForVisibility(By.xpath("//button[@title = 'Align center']"));
+        WebElement button = driver.findElement(By.xpath("//button[@title = 'Align center']"));
         button.click();
+
+        Assert.assertEquals(
+                button.getAttribute("aria-pressed"),
+                "true"
+        );
     }
 
     @Test
-    public void iFrameTest2() {
+    public void iFrameTest2() throws InterruptedException {
         driver.get("https://www.onliner.by/");
+        Thread.sleep(5000);
 
-        WebElement search = waits.waitForVisibility(By.className("fast-search__input"));
+        WebElement search = driver.findElement(By.className("fast-search__input"));
         search.sendKeys("Фильмы", Keys.ENTER);
-        WebElement iFrame = waits.waitForVisibility(By.xpath("//iframe[@class= 'modal-iframe']"));
+        Thread.sleep(5000);
+
+        WebElement iFrame = driver.findElement(By.xpath("//iframe[@class= 'modal-iframe']"));
         driver.switchTo().frame(iFrame);
 
-        List<WebElement> productTitle = waits.waitForVisibilityAllElements(By.className("product__title-link"));
+        List<WebElement> productTitle = driver.findElements(By.className("product__title-link"));
         String firstElementText = productTitle.get(0).getText();
 
+        driver.switchTo().parentFrame();
         search.clear();
         search.sendKeys(firstElementText, Keys.ENTER);
+        Thread.sleep(5000);
 
         System.out.println(firstElementText);
 
+        Assert.assertFalse(
+                firstElementText.isEmpty()
+        );
     }
 
     @Test
-    public void demoQaTest () throws InterruptedException {
+    public void demoQaTest() throws InterruptedException {
         driver.get("https://demoqa.com/frames");
 
         WebElement iFrame = driver.findElement(By.id("frame2"));
@@ -100,66 +132,87 @@ public class HomeTask_12 extends BasePage {
 
         driver.switchTo().defaultContent();
         driver.switchTo().frame("frame1");
-        WebElement frame1 = waits.waitForVisibility(By.id("sampleHeading"));
-        Assert.assertEquals(frame1.getText(), "This is a sample page");
+        WebElement frame1 = driver.findElement(By.id("sampleHeading"));
+
+        Assert.assertEquals(
+                frame1.getText(),
+                "This is a sample page"
+        );
     }
 
     @Test
-    public void demoQaTest1 () {
+    public void demoQaTest1() {
         driver.get("https://demoqa.com/alerts");
 
-        WebElement simpleAlertButton = waits.waitForVisibility(By.id("alertButton"));
+        WebElement simpleAlertButton = driver.findElement(By.id("alertButton"));
         simpleAlertButton.click();
+
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        Assert.assertTrue(waits.waitForNoAlert());
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        Assert.assertTrue(
+                wait.until(
+                        ExpectedConditions.not(ExpectedConditions.alertIsPresent())
+                )
+        );
     }
 
     @Test
-    public void demoQaTest2 () {
+    public void demoQaTest2() {
         driver.get("https://demoqa.com/alerts");
 
-        WebElement simpleAlertAfter5SecButton = waits.waitForVisibility(By.id("timerAlertButton"));
+        WebElement simpleAlertAfter5SecButton = driver.findElement(By.id("timerAlertButton"));
         simpleAlertAfter5SecButton.click();
-        waits.waitForAlert();
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.dismiss();
-        Assert.assertTrue(waits.waitForNoAlert());
+
+        Assert.assertTrue(
+                wait.until(
+                        ExpectedConditions.not(ExpectedConditions.alertIsPresent())
+                )
+        );
     }
 
     @Test
-    public void demoQaTest3 () {
+    public void demoQaTest3() throws InterruptedException {
         driver.get("https://demoqa.com/alerts");
 
-        WebElement mediumAlertButton = waits.waitForVisibility(By.id("confirmButton"));
+        WebElement mediumAlertButton = driver.findElement(By.id("confirmButton"));
         mediumAlertButton.click();
+
         Alert alert = driver.switchTo().alert();
+        Thread.sleep(2000);
         alert.dismiss();
-        WebElement textResult = waits.waitForVisibility(By.id("confirmButton"));
-        Assert.assertEquals(textResult.getText(), "You selected: Cancel");
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("confirmResult")));
+
+        Assert.assertEquals(resultLabel.getText(), "You selected Cancel");
     }
 
     @Test
-    public void demoQaTest4 () {
+    public void demoQaTest4() throws InterruptedException {
         driver.get("https://demoqa.com/alerts");
 
-        WebElement hurdAlertButton = waits.waitForVisibility(By.id("promtButton"));
-        hurdAlertButton.click();
+        List<WebElement> hardAlertButton = driver.findElements(By.xpath("//button[.='Click me']"));
+        hardAlertButton.get(hardAlertButton.size() - 1).click();
+        Thread.sleep(2000);
+
         Alert alert = driver.switchTo().alert();
+        Thread.sleep(2000);
         alert.sendKeys("Hello World!");
         alert.accept();
-        WebElement textResult = waits.waitForVisibility(By.id("promtButton"));
-        Assert.assertEquals(textResult.getText(), "You entered: Hello World!");
-    }
 
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement resultLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("promptResult")));
 
-    @Override
-    protected void openPage() {
-
-    }
-
-    @Override
-    public boolean isPageOpen() {
-        return false;
+        Assert.assertEquals(
+                resultLabel.getText(),
+                "You entered Hello World!"
+        );
     }
 }
