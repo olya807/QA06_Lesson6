@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class BasePage {
 
-    protected final static int WAIT_FOR_PAGE_LOADING_SEC = 15;
+    protected final static int WAIT_FOR_PAGE_LOADING_SEC = 20;
     protected WebDriver driver;
     protected ReadProperties properties;
 

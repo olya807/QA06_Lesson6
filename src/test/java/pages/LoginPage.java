@@ -9,13 +9,14 @@ import org.openqa.selenium.WebElement;
 public class LoginPage extends BasePage {
 
     //Selectors
-    private final static By username_Input_By = By.id("user-name");
+    private final static By username_Input_By = By.id("name");
     private final static By password_Input_By = By.id("password");
-    private final static By login_Button_By = By.id("login-button");
-    private final static By error_Label_By = By.tagName("h3");
+    private final static By login_Button_By = By.id("button_primary");
+    private final static By error_IncorrectCredentialsLabel_By = By.cssSelector(".loginpage-message-title .error-text");
+    private final static By error_LoginRequiredLabel_By = By.xpath("//form[//input[@id='name']]/div[@class='loginpage-message-image loginpage-message ']");
+    private final static By error_PasswordRequiredLabel_By = By.cssSelector(".display-flex .loginpage-message-image");
 
     //Constructors
-
     public LoginPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
     }
@@ -36,7 +37,6 @@ public class LoginPage extends BasePage {
     }
 
     //Getters
-
     public WebElement getUsernameInputBy() {
         return driver.findElement(username_Input_By);
     }
@@ -50,7 +50,15 @@ public class LoginPage extends BasePage {
     }
 
     public WebElement getErrorLabel() {
-        return driver.findElement(error_Label_By);
+        return driver.findElement(error_IncorrectCredentialsLabel_By);
+    }
+
+    public WebElement getLoginRequiredLabel() {
+        return driver.findElement(error_LoginRequiredLabel_By);
+    }
+
+    public WebElement getPasswordRequiredLabel() {
+        return driver.findElement(error_PasswordRequiredLabel_By);
     }
 
 

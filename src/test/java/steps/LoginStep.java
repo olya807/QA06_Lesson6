@@ -11,7 +11,7 @@ public class LoginStep extends BaseStep {
         super(driver);
     }
 
-    public void login(String userName, String password){
+    public void login(String userName, String password) {
 
         LoginPage loginPage = new LoginPage(driver, true);
         loginPage.setUserName(userName);

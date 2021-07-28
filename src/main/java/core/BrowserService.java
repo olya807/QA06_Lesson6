@@ -11,11 +11,11 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class BrowserService {
 
-    private ReadProperties properties = new ReadProperties();
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public BrowserService() {
 
+        ReadProperties properties = new ReadProperties();
         switch (properties.getBrowser().toLowerCase()) {
 
             case "chrome":
