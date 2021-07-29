@@ -20,7 +20,7 @@ public class jsTest extends BaseTest {
         jsExecutor.executeScript("arguments[0].click();", button);
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("added-manually")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("added-manually")));
 
     }
 
