@@ -1,7 +1,7 @@
 package elements;
 
 import org.openqa.selenium.*;
-import units.Waits;
+import utils.Waits;
 
 import java.util.List;
 

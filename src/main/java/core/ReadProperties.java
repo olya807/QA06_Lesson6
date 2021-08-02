@@ -20,7 +20,7 @@ public class ReadProperties {
 
     public String getUrl() {
 
-        return properties.getProperty("url");
+        return properties.getProperty("baseUrl");
     }
 
     public String getBrowser() {
@@ -30,7 +30,7 @@ public class ReadProperties {
 
     public String getUserName() {
 
-        return properties.getProperty("username");
+        return properties.getProperty("userName");
     }
 
     public String getPassword() {

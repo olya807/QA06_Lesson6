@@ -1,62 +1,77 @@
 package pages;
 
 import baseEntities.BasePage;
-import elements.UIElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
 
-    private static String END_POINT = "index.php?/auth/login/";
+    //Selectors
+    private final static By username_Input_By = By.id("name");
+    private final static By password_Input_By = By.id("password");
+    private final static By login_Button_By = By.id("button_primary");
+    private final static By error_IncorrectCredentialsLabel_By = By.cssSelector(".loginpage-message-title .error-text");
+    private final static By error_LoginRequiredLabel_By = By.xpath("//form[//input[@id='name']]/div[@class='loginpage-message-image loginpage-message ']");
+    private final static By error_PasswordRequiredLabel_By = By.cssSelector(".display-flex .loginpage-message-image");
 
-    private static final By emailInputBy = By.id("name");
-    private static final By passwordInputBy = By.id("password");
-    private static final By loginButtonBy = By.id("button_primary");
-    private static final By errorLabelBy = By.className("error-text");
-
-    private static final By emailIsRequiredLabelBy = By.xpath("//div[contains(text(), 'Email/Login is required')]");
-    private static final By passwordIsRequiredLabelBy = By.xpath("//div[contains(text(), 'Password is required')]");
-
-    public LoginPage(WebDriver browserService, boolean openPageByUrl) {
-        super(browserService, openPageByUrl);
+    //Constructors
+    public LoginPage(WebDriver driver, boolean openPageByUrl) {
+        super(driver, openPageByUrl);
     }
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl() + END_POINT);
+        driver.get(properties.getUrl());
     }
 
     @Override
     public boolean isPageOpen() {
+
         try {
-            return new UIElement(driver, By.id("button_primary")).isDisplayed();
-        } catch (Exception ex) {
+            return getLoginButtonBy().isDisplayed();
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-    public UIElement getEmailInput() {
-        return new UIElement(driver, emailInputBy);
+    //Getters
+    public WebElement getUsernameInputBy() {
+        return driver.findElement(username_Input_By);
     }
 
-    public UIElement getPasswordInput() {
-        return new UIElement(driver, passwordInputBy);
+    public WebElement getPasswordInputBy() {
+        return driver.findElement(password_Input_By);
     }
 
-    public UIElement getLoginButton() {
-        return new UIElement(driver, loginButtonBy);
+    public WebElement getLoginButtonBy() {
+        return driver.findElement(login_Button_By);
     }
 
-    public String getErrorText() {
-        return new UIElement(driver, errorLabelBy).getText();
+    public WebElement getErrorLabel() {
+        return driver.findElement(error_IncorrectCredentialsLabel_By);
     }
 
-    public UIElement getEmailIsRequiredLabel() {
-        return new UIElement(driver, emailIsRequiredLabelBy);
+    public WebElement getLoginRequiredLabel() {
+        return driver.findElement(error_LoginRequiredLabel_By);
     }
 
-    public UIElement getPasswordIsRequiredLabel() {
-        return new UIElement(driver, passwordIsRequiredLabelBy);
+    public WebElement getPasswordRequiredLabel() {
+        return driver.findElement(error_PasswordRequiredLabel_By);
     }
 
+
+    //Atomic methods for work with elements
+    public void setUserName(String userName) {
+        getUsernameInputBy().sendKeys(userName);
+    }
+
+    public void setPassword(String password) {
+        getPasswordInputBy().sendKeys(password);
+    }
+
+    public void clickLoginButton() {
+        getLoginButtonBy().click();
+    }
 }

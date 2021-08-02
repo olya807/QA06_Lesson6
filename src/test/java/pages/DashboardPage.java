@@ -1,34 +1,40 @@
 package pages;
 
 import baseEntities.BasePage;
-import elements.UIElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class DashboardPage extends BasePage {
-    private static final String END_POINT = "index.php?/dashboard";
-    protected static final By sidebarProjectsAddButtonBy = By.id("sidebar-projects-add");
 
-    public DashboardPage(WebDriver browserService, boolean openPageByUrl) {
-        super(browserService, openPageByUrl);
+    private final static String endpoint = "/index.php?/dashboard";
+    private final static By title_Label_By = By.id("navigation-dashboard");
+    private final static By addProject_Button_By = By.className(".sidebar-button");
+
+    public DashboardPage(WebDriver driver, boolean openPageByUrl) {
+        super(driver, openPageByUrl);
     }
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl() + END_POINT);
+        driver.get(properties.getUrl() + endpoint);
     }
 
     @Override
     public boolean isPageOpen() {
         try {
-            return getSidebarProjectsAddButton().isDisplayed();
-        } catch (Exception ex) {
+            return getTitleLabel().getText().toLowerCase().trim().equals("dashboard");
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-    public UIElement getSidebarProjectsAddButton() {
-        return new UIElement(driver, sidebarProjectsAddButtonBy);
+    public WebElement getTitleLabel() {
+        return driver.findElement(title_Label_By);
     }
 
+    public WebElement getAddProjectButtonBy() {
+        return driver.findElement(addProject_Button_By);
+    }
 }
