@@ -6,6 +6,10 @@ import steps.LoginStep;
 
 public class LoginPositiveTest extends BaseTest {
 
+    //
+    //Allure screenshots are in 'src/test/java/allureScreenShot' directory
+    //
+
     @Test(description = "TestRail positive login test")
     public void positiveLoginTest() {
 
