@@ -1,10 +1,12 @@
+package tests;
+
 import baseEntities.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import steps.LoginStep;
 
-public class LoginPositiveTest extends BaseTest {
+public class LoginTest extends BaseTest {
 
     //
     //Allure screenshots are in 'src/test/java/allureScreenShot' directory
