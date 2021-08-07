@@ -1,5 +1,6 @@
 package elements;
 
+import core.ReadProperties;
 import org.openqa.selenium.*;
 import utils.Waits;
 
@@ -8,16 +9,17 @@ import java.util.List;
 public class UIElement implements WebElement {
     private By by;
     private final WebDriver driver;
+    protected ReadProperties properties = new ReadProperties();
     private final WebElement webElement;
     private final JavascriptExecutor jsExecutor;
-    private Waits waits;
+    private final Waits waits;
 
     public UIElement(WebDriver driver, By by) {
         this.by = by;
         this.driver = driver;
         this.webElement = driver.findElement(by);
         this.jsExecutor = (JavascriptExecutor) driver;
-        this.waits = new Waits(driver);
+        this.waits = new Waits(driver, properties.getTimeout());
 
     }
 
@@ -26,7 +28,7 @@ public class UIElement implements WebElement {
         this.driver = driver;
         this.webElement = webElement;
         this.jsExecutor = (JavascriptExecutor) driver;
-        this.waits = new Waits(driver);
+        this.waits = new Waits(driver, properties.getTimeout());
 
     }
 
