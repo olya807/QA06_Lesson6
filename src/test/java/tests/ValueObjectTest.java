@@ -1,6 +1,7 @@
 package tests;
 
 import baseEntities.BaseTest;
+import models.Singleton;
 import models.User;
 import models.UserBuilder;
 import org.testng.annotations.Test;
@@ -17,6 +18,11 @@ public class ValueObjectTest extends BaseTest {
         loginSteps.loginWithCorrectCredentials(user);
 
         System.out.println(user.getFirstName() + " " + user.getLastName());
+    }
+
+    @Test
+    public void singletonTest(){
+        System.out.println(Singleton.getInstance());
     }
 
     private User setUpUser(){
