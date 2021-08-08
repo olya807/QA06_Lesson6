@@ -13,6 +13,6 @@ public class OrderStep extends BaseStep {
     public void orderOneProduct(String productName){
 
         ProductsPage productsPage = new ProductsPage(driver, true);
-        productsPage.addToCart(productName);
+        productsPage.addOrRemoveFromCart(productName);
     }
 }
