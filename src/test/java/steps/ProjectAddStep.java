@@ -1,18 +1,18 @@
 package steps;
 
 import baseEntities.BaseStep;
-import org.openqa.selenium.WebDriver;
+import core.BrowserService;
 import pages.ProjectAddPage;
 
 public class ProjectAddStep extends BaseStep {
 
-    public ProjectAddStep(WebDriver driver) {
-        super(driver);
+    public ProjectAddStep(BrowserService browserService) {
+        super(browserService);
     }
 
     public void addProjectDataAndSave(String projectName, String announcementText) {
 
-        ProjectAddPage projectAddPage = new ProjectAddPage(driver, true);
+        ProjectAddPage projectAddPage = new ProjectAddPage(browserService, true);
         projectAddPage.getProjectNameInput().clear();
         projectAddPage.getProjectNameInput().sendKeys(projectName);
         projectAddPage.getAnnouncementTextArea().clear();

@@ -1,9 +1,9 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ProjectEditPage extends BasePage {
@@ -14,8 +14,8 @@ public class ProjectEditPage extends BasePage {
     private final static By announcement_TextArea_By = By.id("announcement");
     private final static By saveProject_Button_By = By.id("accept");
 
-    public ProjectEditPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public ProjectEditPage(BrowserService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ProjectsPage extends BasePage {
@@ -16,8 +16,8 @@ public class ProjectsPage extends BasePage {
     private final static By delete_Checkbox_By = By.cssSelector("#deleteDialog input[name='deleteCheckbox']");
     private final static By ok_Button_By = By.cssSelector("#deleteDialog .button-ok");
 
-    public ProjectsPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public ProjectsPage(BrowserService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
     @Override

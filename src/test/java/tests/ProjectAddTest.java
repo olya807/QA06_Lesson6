@@ -11,13 +11,13 @@ public class ProjectAddTest extends BaseTest {
     @Test
     public void pageFactoryTest1() throws InterruptedException {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login("atrostyanko+0601@gmail.com", "hYE/RiquvQVIzXfiBwm3");
+        LoginStep loginStep = new LoginStep(browserService);
+        loginStep.loginWithCorrectCredentials("atrostyanko+0601@gmail.com", "hYE/RiquvQVIzXfiBwm3");
 
-        DashboardPage dashboardPage = new DashboardPage(driver, false);
+        DashboardPage dashboardPage = new DashboardPage(browserService, false);
         dashboardPage.getAddProjectButtonBy().click();
 
-        ProjectAddPage projectAddPage = new ProjectAddPage(driver, false);
+        ProjectAddPage projectAddPage = new ProjectAddPage(browserService, false);
         projectAddPage.name.sendKeys("Test Project");
 
         System.out.println(

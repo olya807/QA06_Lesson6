@@ -1,21 +1,26 @@
 package baseEntities;
 
+import core.BrowserService;
 import core.ReadProperties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public abstract class BasePage {
 
-    protected final static int WAIT_FOR_PAGE_LOADING_SEC = 15;
+    protected static final int WAIT_FOR_PAGE_LOADING_SEC = 15;
     protected WebDriver driver;
+    protected BrowserService browserService;
+    //public String baseUrl;
     protected ReadProperties properties;
 
     protected abstract void openPage();
 
     public abstract boolean isPageOpen();
 
-    public BasePage(WebDriver driver, boolean openPageByUrl) {
-        this.driver = driver;
+    public BasePage(BrowserService browserService, boolean openPageByUrl) {
+        this.browserService = browserService;
+        this.driver = browserService.getDriver();
+        //this.baseUrl = new ReadProperties().getUrl();
         properties = new ReadProperties();
 
         PageFactory.initElements(this.driver, this);

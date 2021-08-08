@@ -1,9 +1,9 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -38,8 +38,8 @@ public class ProjectAddPage extends BasePage {
     private final static By announcement_TextArea_By = By.id("announcement");
     private final static By addProject_Button_By = By.id("accept");
 
-    public ProjectAddPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public ProjectAddPage(BrowserService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
     @Override

@@ -1,13 +1,13 @@
 package baseEntities;
 
-import org.openqa.selenium.WebDriver;
+import core.BrowserService;
 
 public class BaseStep {
 
-    protected WebDriver driver;
+    protected BrowserService browserService;
 
-    public BaseStep(WebDriver driver){
+    public BaseStep(BrowserService browserService){
 
-        this.driver = driver;
+        this.browserService = browserService;
     }
 }

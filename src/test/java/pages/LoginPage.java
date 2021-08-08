@@ -1,9 +1,9 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
@@ -26,8 +26,8 @@ public class LoginPage extends BasePage {
     private final static By error_PasswordRequiredLabel_By = By.cssSelector(".display-flex .loginpage-message-image");
 
     //Constructors
-    public LoginPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public LoginPage(BrowserService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
     @Override

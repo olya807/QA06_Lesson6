@@ -1,9 +1,9 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class DashboardPage extends BasePage {
@@ -12,8 +12,8 @@ public class DashboardPage extends BasePage {
     private final static By title_Label_By = By.id("navigation-dashboard");
     private final static By addProject_Button_By = By.className("sidebar-button");
 
-    public DashboardPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public DashboardPage(BrowserService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
     @Override
