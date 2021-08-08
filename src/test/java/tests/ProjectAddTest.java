@@ -20,6 +20,15 @@ public class ProjectAddTest extends BaseTest {
         ProjectAddPage projectAddPage = new ProjectAddPage(driver, false);
         projectAddPage.name.sendKeys("Test Project");
 
+        System.out.println(
+                projectAddPage.nameList.size()
+        );
+        System.out.println(
+                projectAddPage.optionsList.size()
+        );
+
+        projectAddPage.optionsList.get(1).click();
+
         Thread.sleep(3000);
     }
 }

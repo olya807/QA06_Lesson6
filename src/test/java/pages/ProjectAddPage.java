@@ -5,8 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+
+import java.util.List;
 
 public class ProjectAddPage extends BasePage {
 
@@ -15,6 +18,19 @@ public class ProjectAddPage extends BasePage {
             @FindBy(css = "input.form-control[name = 'name']")
     })
     public WebElement name;
+
+    @FindBys({
+            @FindBy(className = "form-group"),
+            @FindBy(css = "input.form-control[name = 'name']")
+    })
+    public List<WebElement> nameList;
+
+    @FindAll({
+            @FindBy(id = "suite_mode_single"),
+            @FindBy(id = "suite_mode_single_baseline"),
+            @FindBy(id = "suite_mode_multi")
+    })
+    public List<WebElement> optionsList;
 
     private final static String endpoint = "/index.php?/admin/projects/add";
     private final static By title_Label_By = By.className("page_title");
