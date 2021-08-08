@@ -5,15 +5,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import pages.LoginPage;
-import steps.LoginStep;
+import steps.LoginSteps;
 
 public class LoginTest extends BaseTest {
 
     @Test(description = "TestRail positive login test")
     public void positiveLoginTest() {
 
-        LoginStep loginStep = new LoginStep(browserService);
-        loginStep.loginWithCorrectCredentials(properties.getUserName(), properties.getPassword());
+        LoginSteps loginSteps = new LoginSteps(browserService);
+        loginSteps.loginWithCorrectCredentials(properties.getUserName(), properties.getPassword());
 
         Assert.assertTrue(
                 new DashboardPage(browserService, false).isPageOpen(),
@@ -24,8 +24,8 @@ public class LoginTest extends BaseTest {
     @Test
     public void negativeLoginTest() {
 
-        LoginStep loginStep = new LoginStep(browserService);
-        loginStep.loginWithIncorrectCredentials("sadface", "cvbjfg");
+        LoginSteps loginSteps = new LoginSteps(browserService);
+        loginSteps.loginWithIncorrectCredentials("sadface", "cvbjfg");
 
         Assert.assertEquals(new LoginPage(browserService, false).getErrorLabel().getText(),
                 "Epic sadface: Username and password do not match any user in this service"
@@ -35,8 +35,8 @@ public class LoginTest extends BaseTest {
     @Test(description = "Attachment on Fail test")
     public void positiveLoginAttachmentOnFailTest() {
 
-        LoginStep loginStep = new LoginStep(browserService);
-        loginStep.loginWithCorrectCredentials(properties.getUserName(), properties.getPassword());
+        LoginSteps loginSteps = new LoginSteps(browserService);
+        loginSteps.loginWithCorrectCredentials(properties.getUserName(), properties.getPassword());
 
         Assert.assertTrue(
                 false
