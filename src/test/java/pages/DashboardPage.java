@@ -10,7 +10,7 @@ public class DashboardPage extends BasePage {
 
     private final static String endpoint = "/index.php?/dashboard";
     private final static By title_Label_By = By.id("navigation-dashboard");
-    private final static By addProject_Button_By = By.className(".sidebar-button");
+    private final static By addProject_Button_By = By.className("sidebar-button");
 
     public DashboardPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);

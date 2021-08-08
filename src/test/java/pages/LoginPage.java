@@ -5,11 +5,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 
 public class LoginPage extends BasePage {
 
     //Selectors
-    private final static By username_Input_By = By.id("name");
+    @FindBy(id = "name")
+    public WebElement emailInput;
+    @FindBys({
+            @FindBy(className = "form-group"),
+            @FindBy(css = "input[name = 'name']")
+            })
+
+    //private final static By username_Input_By = By.id("name");
     private final static By password_Input_By = By.id("password");
     private final static By login_Button_By = By.id("button_primary");
     private final static By error_IncorrectCredentialsLabel_By = By.cssSelector(".loginpage-message-title .error-text");
@@ -37,9 +46,9 @@ public class LoginPage extends BasePage {
     }
 
     //Getters
-    public WebElement getUsernameInputBy() {
+    /*public WebElement getUsernameInputBy() {
         return driver.findElement(username_Input_By);
-    }
+    }*/
 
     public WebElement getPasswordInputBy() {
         return driver.findElement(password_Input_By);
@@ -64,7 +73,7 @@ public class LoginPage extends BasePage {
 
     //Atomic methods for work with elements
     public void setUserName(String userName) {
-        getUsernameInputBy().sendKeys(userName);
+        emailInput.sendKeys(userName);
     }
 
     public void setPassword(String password) {

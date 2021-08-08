@@ -5,8 +5,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 
 public class ProjectAddPage extends BasePage {
+
+    @FindBys({
+            @FindBy(className = "form-group"),
+            @FindBy(css = "input.form-control[name = 'name']")
+    })
+    public WebElement name;
 
     private final static String endpoint = "/index.php?/admin/projects/add";
     private final static By title_Label_By = By.className("page_title");
