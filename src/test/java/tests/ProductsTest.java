@@ -10,10 +10,17 @@ import steps.LoginStep;
 public class ProductsTest extends BaseTest {
 
     @Test
-    public void addProductToCart() {
+    public void loginTest() {
 
         LoginStep loginStep = new LoginStep(driver);
         loginStep.login(properties.getUserName(), properties.getPassword());
+
+        ProductsPage productsPage = new ProductsPage(driver, false);
+        Assert.assertEquals(productsPage.getTitleText(), "PRODUCTS", "'Products' page is not opened.");
+    }
+
+    @Test(dependsOnMethods = "loginTest")
+    public void addProductToCart() {
 
         ProductsPage product = new ProductsPage(driver, true);
         product.addOrRemoveFromCart("Sauce Labs Backpack");
