@@ -1,6 +1,6 @@
 package steps;
 
-import baseEntities.BaseStep;
+import base.BaseStep;
 import org.openqa.selenium.WebDriver;
 import pages.ProductsPage;
 

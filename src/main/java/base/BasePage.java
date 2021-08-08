@@ -1,4 +1,4 @@
-package baseEntities;
+package base;
 
 import core.ReadProperties;
 import org.openqa.selenium.WebDriver;

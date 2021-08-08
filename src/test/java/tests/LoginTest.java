@@ -1,13 +1,13 @@
 package tests;
 
-import baseEntities.BaseTest;
+import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProductsPage;
 import steps.LoginStep;
 
-public class SmokeTest extends BaseTest {
+public class LoginTest extends BaseTest {
 
     @Test
     public void positiveLoginTest() {
