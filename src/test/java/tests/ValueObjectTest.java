@@ -1,6 +1,6 @@
 package tests;
 
-import baseEntities.BaseTest;
+import base.BaseTest;
 import models.Singleton;
 import models.User;
 import models.UserBuilder;

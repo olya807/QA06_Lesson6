@@ -1,6 +1,6 @@
 package pages;
 
-import baseEntities.BasePage;
+import base.BasePage;
 import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;

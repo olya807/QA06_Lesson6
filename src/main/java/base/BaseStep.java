@@ -1,4 +1,4 @@
-package baseEntities;
+package base;
 
 import core.BrowserService;
 

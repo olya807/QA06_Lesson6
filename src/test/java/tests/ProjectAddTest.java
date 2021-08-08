@@ -1,6 +1,6 @@
 package tests;
 
-import baseEntities.BaseTest;
+import base.BaseTest;
 import org.testng.annotations.Test;
 import pages.ProjectAddPage;
 import steps.LoginSteps;

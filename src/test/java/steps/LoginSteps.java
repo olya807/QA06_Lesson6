@@ -1,6 +1,6 @@
 package steps;
 
-import baseEntities.BaseStep;
+import base.BaseStep;
 import core.BrowserService;
 import io.qameta.allure.Step;
 import models.User;

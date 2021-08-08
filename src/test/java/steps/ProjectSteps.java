@@ -1,6 +1,6 @@
 package steps;
 
-import baseEntities.BaseStep;
+import base.BaseStep;
 import core.BrowserService;
 import pages.DashboardPage;
 import pages.ProjectAddPage;
