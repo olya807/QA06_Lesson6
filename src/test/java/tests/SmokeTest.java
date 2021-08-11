@@ -3,29 +3,32 @@ package tests;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.CheckoutPage;
-import pages.LoginPage;
-import pages.ProductsPage;
-import pages.ShoppingCartPage;
-import steps.LoginStep;
+import pages.*;
+import steps.CheckoutSteps;
+import steps.LoginSteps;
+import steps.ProductsSteps;
+import steps.ShoppingCartSteps;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SmokeTest extends BaseTest {
 
     @Test
     public void positiveLoginTest() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
 
         ProductsPage productsPage = new ProductsPage(driver, false);
         Assert.assertEquals(productsPage.getTitleText(), "PRODUCTS", "'Products' page is not opened.");
     }
 
     @Test
-    public void negativeTest() {
+    public void negativeLoginTest() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login("sadface", "cvbjfg");
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login("sadface", "cvbjfg");
 
         Assert.assertEquals(new LoginPage(driver, false).getErrorLabel().getText(),
                 "Epic sadface: Username and password do not match any user in this service"
@@ -35,11 +38,11 @@ public class SmokeTest extends BaseTest {
     @Test
     public void addProductToCart() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
 
         ProductsPage product = new ProductsPage(driver, true);
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
+        product.addToCart("Sauce Labs Backpack");
 
         Assert.assertEquals(
                 product.getCartBadgeText(),
@@ -51,18 +54,19 @@ public class SmokeTest extends BaseTest {
     @Test
     public void removeProductFromCart() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
+        List<String> productsRemoveList = Arrays.asList("Sauce Labs Backpack");
 
-        ProductsPage product = new ProductsPage(driver, false);
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
-        product.addOrRemoveFromCart("Sauce Labs Bike Light");
-        product.addOrRemoveFromCart("Sauce Labs Bolt T-Shirt");
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
 
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
+        ProductsSteps productsSteps = new ProductsSteps(driver);
+        productsSteps.addProducts(productsAddList);
+
+        productsSteps.removeProducts(productsRemoveList);
 
         Assert.assertEquals(
-                product.getCartBadgeText(),
+                new ProductsPage(driver, false).getCartBadgeText(),
                 "2",
                 "Product wasn't removed from cart"
         );
@@ -71,12 +75,14 @@ public class SmokeTest extends BaseTest {
     @Test
     public void addProductsAndGoToShoppingCart() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
 
-        ProductsPage product = new ProductsPage(driver, false);
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
-        product.getShoppingCartLink().click();
+        List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
+
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
+
+        ProductsSteps productsSteps = new ProductsSteps(driver);
+        productsSteps.addProductsAndGoToCart(productsAddList);
 
         ShoppingCartPage shoppingCart = new ShoppingCartPage(driver, false);
 
@@ -86,8 +92,8 @@ public class SmokeTest extends BaseTest {
                 "Shopping cart page wasn't opened"
         );
         Assert.assertEquals(
-                product.getCartBadgeText(),
-                "1",
+                new ProductsPage(driver, false).getCartBadgeText(),
+                "2",
                 "Product number on shopping cart is not correct"
         );
         Assert.assertEquals(
@@ -100,19 +106,20 @@ public class SmokeTest extends BaseTest {
     @Test
     public void removeShoppingCartProducts() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
+        List<String> productsRemoveList = Arrays.asList("Sauce Labs Backpack");
 
-        ProductsPage product = new ProductsPage(driver, false);
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
-        product.addOrRemoveFromCart("Sauce Labs Bike Light");
-        product.addOrRemoveFromCart("Sauce Labs Bolt T-Shirt");
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
 
-        ShoppingCartPage shoppingCart = new ShoppingCartPage(driver, true);
-        shoppingCart.getRemoveFromCartProductButton("Sauce Labs Backpack");
+        ProductsSteps productsSteps = new ProductsSteps(driver);
+        productsSteps.addProductsAndGoToCart(productsAddList);
+
+        ShoppingCartSteps shoppingCartSteps = new ShoppingCartSteps(driver);
+        shoppingCartSteps.removeProducts(productsRemoveList);
 
         Assert.assertEquals(
-                product.getCartBadgeText(),
+                new ProductsPage(driver, false).getCartBadgeText(),
                 "2",
                 "Product wasn't removed from cart"
         );
@@ -121,13 +128,13 @@ public class SmokeTest extends BaseTest {
     @Test
     public void goToCheckoutShoppingCartProducts() {
 
-        LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
 
-        ProductsPage product = new ProductsPage(driver, false);
-        product.addOrRemoveFromCart("Sauce Labs Backpack");
-        product.addOrRemoveFromCart("Sauce Labs Bike Light");
-        product.addOrRemoveFromCart("Sauce Labs Bolt T-Shirt");
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
+
+        ProductsSteps productsSteps = new ProductsSteps(driver);
+        productsSteps.addProducts(productsAddList);
 
         ShoppingCartPage shoppingCart = new ShoppingCartPage(driver, true);
         shoppingCart.getCheckoutButton().click();
@@ -135,14 +142,52 @@ public class SmokeTest extends BaseTest {
         CheckoutPage checkoutPage = new CheckoutPage(driver, false);
 
         Assert.assertEquals(
-                product.getCartBadgeText(),
-                "2",
+                new ProductsPage(driver, false).getCartBadgeText(),
+                "3",
                 "Product wasn't removed from cart"
         );
         Assert.assertTrue(
                 checkoutPage.getFirstNameInput().isDisplayed(),
-                "First name is not displayed"
+                "First Name is not displayed"
         );
+        Assert.assertTrue(
+                checkoutPage.getLastNameInput().isDisplayed(),
+                "Last Name is not displayed"
+        );
+        Assert.assertTrue(
+                checkoutPage.getPostalCodeInput().isDisplayed(),
+                "Postal Code is not displayed"
+        );
+    }
 
+    @Test
+    public void checkoutShoppingCartProducts() {
+
+        List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
+
+        LoginSteps loginSteps = new LoginSteps(driver);
+        loginSteps.login(properties.getUserName(), properties.getPassword());
+
+        ProductsSteps productsSteps = new ProductsSteps(driver);
+        productsSteps.addProducts(productsAddList);
+
+        ShoppingCartPage shoppingCart = new ShoppingCartPage(driver, true);
+        shoppingCart.getCheckoutButton().click();
+
+        CheckoutSteps checkoutSteps = new CheckoutSteps(driver);
+        checkoutSteps.fillInCheckoutDataAndSend("User", "Name", "12345");
+
+        CheckoutPage checkoutPage = new CheckoutPage(driver, false);
+        checkoutPage.getContinueButton().click();
+
+        Assert.assertEquals(
+                new CheckoutOverviewPage(driver, false).getTitleLabel().getText(),
+                "CHECKOUT: OVERVIEW",
+                "'Checkout Overview' page is not displayed"
+        );
+        Assert.assertTrue(
+                new CheckoutOverviewPage(driver, false).getFinishButton().isDisplayed(),
+                "Finish button is not displayed"
+        );
     }
 }

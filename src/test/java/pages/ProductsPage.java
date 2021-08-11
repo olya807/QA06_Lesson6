@@ -12,7 +12,8 @@ public class ProductsPage extends BasePage {
     private final static By title_Label_By = By.className("title");
     private final static By shoppingCart_Link_By = By.className("shopping_cart_link");
     private final static By cart_Badge_By = By.className("shopping_cart_badge");
-    private final static String product_AddOrRemoveFromCart_Button = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button";
+    private final static String productAddToCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Add to cart']";
+    private final static String productRemoveFromCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Remove']";
 
     public ProductsPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
@@ -57,13 +58,23 @@ public class ProductsPage extends BasePage {
         return getCartBadge().getText();
     }
 
-    public WebElement getAddOrRemoveFromCartProductButton(String productName){
+    public WebElement getAddToCartProductButton(String productName){
 
-        return driver.findElement(By.xpath(product_AddOrRemoveFromCart_Button.replace("text_to_replace", productName)));
+        return driver.findElement(By.xpath(productAddToCart_Button_By.replace("text_to_replace", productName)));
     }
 
-    public void addOrRemoveFromCart(String productName){
+    public void addToCart(String productName){
 
-        getAddOrRemoveFromCartProductButton(productName).click();
+        getAddToCartProductButton(productName).click();
+    }
+
+    public WebElement getRemoveFromCartProductButton(String productName){
+
+        return driver.findElement(By.xpath(productRemoveFromCart_Button_By.replace("text_to_replace", productName)));
+    }
+
+    public void removeFromCart(String productName){
+
+        getRemoveFromCartProductButton(productName).click();
     }
 }

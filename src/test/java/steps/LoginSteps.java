@@ -4,10 +4,10 @@ import base.BaseStep;
 import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 
-public class LoginStep extends BaseStep {
+public class LoginSteps extends BaseStep {
 
 
-    public LoginStep(WebDriver driver) {
+    public LoginSteps(WebDriver driver) {
         super(driver);
     }
 

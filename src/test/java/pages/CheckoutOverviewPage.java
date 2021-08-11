@@ -6,17 +6,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class CheckoutPage extends BasePage {
+public class CheckoutOverviewPage extends BasePage {
 
-    private final static String endpoint = "checkout-step-one.html";
+    private final static String endpoint = "checkout-step-two.html";
     private final static By title_Label_By = By.className("title");
-    private final static By firstName_Input_By = By.id("first-name");
-    private final static By lastName_Input_By = By.id("last-name");
-    private final static By postalCode_Input_By = By.id("postal-code");
     private final static By cancel_Button_By = By.className("cancel");
-    private final static By continue_Button_By = By.id("continue");
+    private final static By finish_Button_By = By.className("finish");
 
-    public CheckoutPage(WebDriver driver, boolean openPageByUrl) {
+    public CheckoutOverviewPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
     }
 
@@ -38,23 +35,11 @@ public class CheckoutPage extends BasePage {
         return driver.findElement(title_Label_By);
     }
 
-    public WebElement getFirstNameInput() {
-        return driver.findElement(firstName_Input_By);
-    }
-
-    public WebElement getLastNameInput() {
-        return driver.findElement(lastName_Input_By);
-    }
-
-    public WebElement getPostalCodeInput() {
-        return driver.findElement(postalCode_Input_By);
-    }
-
     public WebElement getCancelButton() {
         return driver.findElement(cancel_Button_By);
     }
 
-    public WebElement getContinueButton() {
-        return driver.findElement(continue_Button_By);
+    public WebElement getFinishButton() {
+        return driver.findElement(finish_Button_By);
     }
 }
