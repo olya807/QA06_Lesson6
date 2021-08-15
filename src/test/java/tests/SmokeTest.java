@@ -75,7 +75,6 @@ public class SmokeTest extends BaseTest {
     @Test
     public void addProductsAndGoToShoppingCart() {
 
-
         List<String> productsAddList = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
 
         LoginSteps loginSteps = new LoginSteps(driver);
@@ -92,13 +91,8 @@ public class SmokeTest extends BaseTest {
                 "Shopping cart page wasn't opened"
         );
         Assert.assertEquals(
-                new ProductsPage(driver, false).getCartBadgeText(),
-                "2",
-                "Product number on shopping cart is not correct"
-        );
-        Assert.assertEquals(
                 shoppingCart.getCartItemLabels().size(),
-                1,
+                2,
                 "Number of products in shopping cart list is not correct"
         );
     }
@@ -176,9 +170,6 @@ public class SmokeTest extends BaseTest {
 
         CheckoutSteps checkoutSteps = new CheckoutSteps(driver);
         checkoutSteps.fillInCheckoutDataAndSend("User", "Name", "12345");
-
-        CheckoutPage checkoutPage = new CheckoutPage(driver, false);
-        checkoutPage.getContinueButton().click();
 
         Assert.assertEquals(
                 new CheckoutOverviewPage(driver, false).getTitleLabel().getText(),

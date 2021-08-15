@@ -10,8 +10,8 @@ public class CheckoutOverviewPage extends BasePage {
 
     private final static String endpoint = "checkout-step-two.html";
     private final static By title_Label_By = By.className("title");
-    private final static By cancel_Button_By = By.className("cancel");
-    private final static By finish_Button_By = By.className("finish");
+    private final static By cancel_Button_By = By.id("cancel");
+    private final static By finish_Button_By = By.id("finish");
 
     public CheckoutOverviewPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);

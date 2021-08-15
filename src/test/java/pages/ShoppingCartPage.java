@@ -63,4 +63,9 @@ public class ShoppingCartPage extends BasePage {
 
         return driver.findElement(By.xpath(product_AddOrRemoveFromCart_Button.replace("text_to_replace", productName)));
     }
+
+    public void removeProductFromCartByName(String productName){
+
+        getRemoveFromCartProductButton(productName).click();
+    }
 }
