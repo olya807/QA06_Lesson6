@@ -5,13 +5,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ProductsPage extends BasePage {
 
+    //PageFactory Selectors
+    @CacheLookup
+    @FindBy(className = "title")
+    public WebElement title_Label_By;
+
+    @CacheLookup
+    @FindBy(className = "shopping_cart_link")
+    public WebElement shoppingCart_Link_By;
+
+    @CacheLookup
+    @FindBy(className = "shopping_cart_badge")
+    public WebElement cart_Badge_By;
+
     private final static String endpoint = "inventory.html";
-    private final static By title_Label_By = By.className("title");
-    private final static By shoppingCart_Link_By = By.className("shopping_cart_link");
-    private final static By cart_Badge_By = By.className("shopping_cart_badge");
     private final static String productAddToCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Add to cart']";
     private final static String productRemoveFromCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Remove']";
 
@@ -28,34 +42,21 @@ public class ProductsPage extends BasePage {
     public boolean isPageOpen() {
 
         try {
-            return getTitleLabel().isDisplayed();
+            return title_Label_By.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-    //Getters
-    public WebElement getTitleLabel() {
-        return driver.findElement(title_Label_By);
-    }
+    //PageFactory atomic methods for work with elements
 
     public String getTitleText() {
-        return getTitleLabel().getText();
-    }
-
-    public WebElement getShoppingCartLink() {
-
-        return driver.findElement(shoppingCart_Link_By);
-    }
-
-    public WebElement getCartBadge(){
-
-        return driver.findElement(cart_Badge_By);
+        return title_Label_By.getText();
     }
 
     public String getCartBadgeText(){
 
-        return getCartBadge().getText();
+        return cart_Badge_By.getText();
     }
 
     public WebElement getAddToCartProductButton(String productName){
@@ -63,9 +64,11 @@ public class ProductsPage extends BasePage {
         return driver.findElement(By.xpath(productAddToCart_Button_By.replace("text_to_replace", productName)));
     }
 
-    public void addToCart(String productName){
+    public ProductsPage addToCart(String productName){
 
         getAddToCartProductButton(productName).click();
+
+        return new ProductsPage(driver, false);
     }
 
     public WebElement getRemoveFromCartProductButton(String productName){
@@ -76,5 +79,38 @@ public class ProductsPage extends BasePage {
     public void removeFromCart(String productName){
 
         getRemoveFromCartProductButton(productName).click();
+    }
+
+    public ShoppingCartPage clickShoppingCartLink(){
+
+        shoppingCart_Link_By.click();
+
+        return new ShoppingCartPage(driver, false);
+    }
+
+    public ProductsPage addProducts(List<String> products) {
+
+        for (String s : products) {
+            addToCart(s);
+        }
+
+        return new ProductsPage(driver, false);
+    }
+
+    public ProductsPage removeProducts(List<String> products) {
+
+        for (String s : products) {
+            removeFromCart(s);
+        }
+
+        return new ProductsPage(driver, false);
+    }
+
+    public ShoppingCartPage addProductsAndGoToCart(List<String> products){
+
+        addProducts(products);
+        clickShoppingCartLink();
+
+        return new ShoppingCartPage(driver, false);
     }
 }

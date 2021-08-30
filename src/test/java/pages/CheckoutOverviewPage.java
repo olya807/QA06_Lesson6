@@ -1,17 +1,28 @@
 package pages;
 
 import base.BasePage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
 
 public class CheckoutOverviewPage extends BasePage {
 
+    //PageFactory Selectors
+    @CacheLookup
+    @FindBy(className = "title")
+    public WebElement title_Label_By;
+
+    @CacheLookup
+    @FindBy(id = "cancel")
+    public WebElement cancel_Button_By;
+
+    @CacheLookup
+    @FindBy(id = "finish")
+    public WebElement finish_Button_By;
+
     private final static String endpoint = "checkout-step-two.html";
-    private final static By title_Label_By = By.className("title");
-    private final static By cancel_Button_By = By.id("cancel");
-    private final static By finish_Button_By = By.id("finish");
 
     public CheckoutOverviewPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
@@ -25,21 +36,9 @@ public class CheckoutOverviewPage extends BasePage {
     @Override
     public boolean isPageOpen() {
         try {
-            return getTitleLabel().isDisplayed();
+            return title_Label_By.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
-    }
-
-    public WebElement getTitleLabel() {
-        return driver.findElement(title_Label_By);
-    }
-
-    public WebElement getCancelButton() {
-        return driver.findElement(cancel_Button_By);
-    }
-
-    public WebElement getFinishButton() {
-        return driver.findElement(finish_Button_By);
     }
 }

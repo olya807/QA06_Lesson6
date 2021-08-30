@@ -2,6 +2,7 @@ package base;
 
 import core.ReadProperties;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 public abstract class BasePage {
 
@@ -16,6 +17,8 @@ public abstract class BasePage {
     public BasePage(WebDriver driver, boolean openPageByUrl) {
         this.driver = driver;
         properties = new ReadProperties();
+
+        PageFactory.initElements(this.driver, this);
 
         if (openPageByUrl)
             openPage();

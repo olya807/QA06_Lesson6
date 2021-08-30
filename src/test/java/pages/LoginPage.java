@@ -1,18 +1,37 @@
 package pages;
 
 import base.BasePage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindAll;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 
 public class LoginPage extends BasePage {
 
-    //Selectors
-    private final static By username_Input_By = By.id("user-name");
-    private final static By password_Input_By = By.id("password");
-    private final static By login_Button_By = By.id("login-button");
-    private final static By error_Label_By = By.tagName("h3");
+    //PageFactory Selectors
+    @CacheLookup
+    @FindBy(id = "user-name")
+    public WebElement username_Input_By;
+
+    @CacheLookup
+    @FindBy(id = "password")
+    public WebElement password_Input_By;
+
+    @CacheLookup
+    @FindAll({
+            @FindBy(id = "login-button")
+    })
+    public WebElement login_Button_By;
+
+    @CacheLookup
+    @FindBys({
+            @FindBy(css = "form"),
+            @FindBy(tagName = "h3")
+    })
+    public WebElement error_Label_By;
 
     //Constructors
 
@@ -29,41 +48,22 @@ public class LoginPage extends BasePage {
     public boolean isPageOpen() {
 
         try {
-            return getLoginButtonBy().isDisplayed();
+            return login_Button_By.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-    //Getters
-
-    public WebElement getUsernameInputBy() {
-        return driver.findElement(username_Input_By);
-    }
-
-    public WebElement getPasswordInputBy() {
-        return driver.findElement(password_Input_By);
-    }
-
-    public WebElement getLoginButtonBy() {
-        return driver.findElement(login_Button_By);
-    }
-
-    public WebElement getErrorLabel() {
-        return driver.findElement(error_Label_By);
-    }
-
-
-    //Atomic methods for work with elements
+    //PageFactory atomic methods for work with elements
     public void setUserName(String userName) {
-        getUsernameInputBy().sendKeys(userName);
+        username_Input_By.sendKeys(userName);
     }
 
     public void setPassword(String password) {
-        getPasswordInputBy().sendKeys(password);
+        password_Input_By.sendKeys(password);
     }
 
     public void clickLoginButton() {
-        getLoginButtonBy().click();
+        login_Button_By.click();
     }
 }
