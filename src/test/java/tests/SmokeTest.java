@@ -169,7 +169,7 @@ public class SmokeTest extends BaseTest {
                 .clickCheckoutButton();
 
         CheckoutOverviewPage checkoutOverviewPage = new CheckoutSteps(driver)
-                .fillInCheckoutDataAndSend("User", "Name", "12345");
+                .fillInCheckoutDataAndSend();
 
         Assert.assertEquals(
                 checkoutOverviewPage.title_Label_By.getText(),

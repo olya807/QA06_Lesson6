@@ -33,9 +33,19 @@ public class ReadProperties {
         return properties.getProperty("username");
     }
 
+    public String getUserLastName() {
+
+        return properties.getProperty("lastname");
+    }
+
     public String getPassword() {
 
         return properties.getProperty("password");
+    }
+
+    public String getPostalCode() {
+
+        return properties.getProperty("postalCode");
     }
 
     public int getTimeout() {
