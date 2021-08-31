@@ -1,6 +1,7 @@
 package tests;
 
 import baseEntities.BaseTest;
+import models.ProjectBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.ProjectsPage;
@@ -18,12 +19,14 @@ public class ProjectTest extends BaseTest {
     @Test
     public void chainOfInvocationsStepLevelTest() {
 
+        ProjectBuilder projectBuilder = setupProjectBuilder();
+
         new LoginStep(driver)
                 .loginWithCorrectData()
-                .addProjectDataAndSave(projectName, "Test Announcement")
-                .clickEditProjectButtonTableRow(projectName)
-                .editProjectDataAndSave(projectNameEdited, "Test Announcement edited")
-                .clickDeleteProjectButtonTableRow(projectNameEdited)
+                .addProjectDataAndSave(projectBuilder.getProjectName(), projectBuilder.getProjectAnnouncementText())
+                .clickEditProjectButtonTableRow(projectBuilder.getProjectName())
+                .editProjectDataAndSave(projectBuilder.getProjectEditName(), projectBuilder.getProjectAnnouncementEditText())
+                .clickDeleteProjectButtonTableRow(projectBuilder.getProjectEditName())
                 .clickDeleteProjectCheckbox()
                 .clickOkButton();
 
@@ -32,5 +35,15 @@ public class ProjectTest extends BaseTest {
                 "Successfully deleted the project.",
                 "'Success' message wasn't found."
         );
+    }
+
+    private ProjectBuilder setupProjectBuilder() {
+
+        return new ProjectBuilder.Builder()
+                .withProjectName(projectName)
+                .withProjectEditName(projectNameEdited)
+                .withAnnouncementText("Test Announcement")
+                .withAnnouncementEditText("Test Announcement edited")
+                .build();
     }
 }
