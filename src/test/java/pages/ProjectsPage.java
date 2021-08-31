@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import steps.ProjectEditStep;
 
 public class ProjectsPage extends BasePage {
 
@@ -75,5 +76,33 @@ public class ProjectsPage extends BasePage {
     public WebElement getOkButton() {
 
         return driver.findElement(ok_Button_By);
+    }
+
+    public ProjectEditStep clickEditProjectButtonTableRow(String projectName) {
+
+        getEditProjectButtonTableRow(projectName).click();
+
+        return new ProjectEditStep(driver);
+    }
+
+    public ProjectsPage clickDeleteProjectButtonTableRow(String projectName) {
+
+        getDeleteProjectButtonTableRow(projectName).click();
+
+        return new ProjectsPage(driver, false);
+    }
+
+    public ProjectsPage clickDeleteProjectCheckbox() {
+
+        getDeleteProjectCheckbox().click();
+
+        return new ProjectsPage(driver, false);
+    }
+
+    public ProjectsPage clickOkButton() {
+
+        getOkButton().click();
+
+        return new ProjectsPage(driver, false);
     }
 }

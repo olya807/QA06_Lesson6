@@ -12,7 +12,7 @@ public class LoginPositiveTest extends BaseTest {
     public void positiveLoginTest() {
 
         LoginStep loginStep = new LoginStep(driver);
-        loginStep.login(properties.getUserName(), properties.getPassword());
+        loginStep.loginWithCorrectData();
 
         Assert.assertTrue(
                 new DashboardPage(driver, false).isPageOpen(),

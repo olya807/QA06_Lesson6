@@ -3,6 +3,7 @@ package steps;
 import baseEntities.BaseStep;
 import org.openqa.selenium.WebDriver;
 import pages.ProjectEditPage;
+import pages.ProjectsPage;
 
 public class ProjectEditStep extends BaseStep {
 
@@ -10,7 +11,7 @@ public class ProjectEditStep extends BaseStep {
         super(driver);
     }
 
-    public void editProjectDataAndSave(String projectName, String announcementText) {
+    public ProjectsPage editProjectDataAndSave(String projectName, String announcementText) {
 
         ProjectEditPage projectEditPage = new ProjectEditPage(driver, false);
         projectEditPage.getProjectNameInput().clear();
@@ -18,5 +19,7 @@ public class ProjectEditStep extends BaseStep {
         projectEditPage.getAnnouncementTextArea().clear();
         projectEditPage.getAnnouncementTextArea().sendKeys(announcementText);
         projectEditPage.getSaveProjectButton().click();
+
+        return new ProjectsPage(driver, false);
     }
 }
