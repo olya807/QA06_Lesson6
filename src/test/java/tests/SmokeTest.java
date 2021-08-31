@@ -86,12 +86,12 @@ public class SmokeTest extends BaseTest {
                 .addProductsAndGoToCart(productsAddList);
 
         Assert.assertEquals(
-                shoppingCart.getTitleLabel().getText(),
+                shoppingCart.title_Label_By.getText(),
                 "YOUR CART",
                 "Shopping cart page wasn't opened"
         );
         Assert.assertEquals(
-                shoppingCart.getCartItemLabels().size(),
+                shoppingCart.cartItemLabel_By.size(),
                 2,
                 "Number of products in shopping cart list is not correct"
         );
@@ -170,6 +170,35 @@ public class SmokeTest extends BaseTest {
 
         CheckoutOverviewPage checkoutOverviewPage = new CheckoutSteps(driver)
                 .fillInCheckoutDataAndSend();
+
+        Assert.assertEquals(
+                checkoutOverviewPage.title_Label_By.getText(),
+                "CHECKOUT: OVERVIEW",
+                "'Checkout Overview' page is not displayed"
+        );
+        Assert.assertTrue(
+                checkoutOverviewPage.finish_Button_By.isDisplayed(),
+                "Finish button is not displayed"
+        );
+    }
+
+    @Test
+    public void checkoutShoppingCartProductsWithBuilder() {
+
+        List<String> productsAddList = Arrays.asList(
+                "Sauce Labs Backpack",
+                "Sauce Labs Bike Light",
+                "Sauce Labs Bolt T-Shirt"
+        );
+
+        new LoginSteps(driver)
+                .loginWithCorrectData()
+                .addProducts(productsAddList)
+                .clickShoppingCartLink()
+                .clickCheckoutButton();
+
+        CheckoutOverviewPage checkoutOverviewPage = new CheckoutSteps(driver)
+                .fillInCheckoutDataAndSendWithBuilder();
 
         Assert.assertEquals(
                 checkoutOverviewPage.title_Label_By.getText(),

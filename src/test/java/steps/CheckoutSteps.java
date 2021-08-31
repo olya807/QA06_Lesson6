@@ -2,6 +2,7 @@ package steps;
 
 import base.BaseStep;
 import models.User;
+import models.UserBuilder;
 import org.openqa.selenium.WebDriver;
 import pages.CheckoutOverviewPage;
 import pages.CheckoutPage;
@@ -26,6 +27,20 @@ public class CheckoutSteps extends BaseStep {
         return new CheckoutOverviewPage(driver, false);
     }
 
+    public CheckoutOverviewPage fillInCheckoutDataAndSendWithBuilder() {
+
+        CheckoutPage checkoutPage = new CheckoutPage(driver, false);
+        UserBuilder userBuilder = setupUserBuilder();
+
+        checkoutPage.firstName_Input_By.sendKeys(userBuilder.getFirstName());
+        checkoutPage.lastName_Input_By.sendKeys(userBuilder.getLastName());
+        checkoutPage.postalCode_Input_By.sendKeys(userBuilder.getPostalCode());
+
+        checkoutPage.continue_Button_By.click();
+
+        return new CheckoutOverviewPage(driver, false);
+    }
+
     private User setupUser() {
 
         User user = new User();
@@ -34,5 +49,14 @@ public class CheckoutSteps extends BaseStep {
         user.setPostalCode(properties.getPostalCode());
 
         return user;
+    }
+
+    private UserBuilder setupUserBuilder() {
+
+        return new UserBuilder.Builder()
+                .withFirstName(properties.getUserName())
+                .withLastName(properties.getUserLastName())
+                .withPostalCode(properties.getPostalCode())
+                .build();
     }
 }
