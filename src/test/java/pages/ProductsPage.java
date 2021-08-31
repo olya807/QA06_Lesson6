@@ -12,6 +12,8 @@ import java.util.List;
 
 public class ProductsPage extends BasePage {
 
+    private final static String endpoint = "inventory.html";
+
     //PageFactory Selectors
     @CacheLookup
     @FindBy(className = "title")
@@ -25,7 +27,6 @@ public class ProductsPage extends BasePage {
     @FindBy(className = "shopping_cart_badge")
     public WebElement cart_Badge_By;
 
-    private final static String endpoint = "inventory.html";
     private final static String productAddToCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Add to cart']";
     private final static String productRemoveFromCart_Button_By = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button[.='Remove']";
 

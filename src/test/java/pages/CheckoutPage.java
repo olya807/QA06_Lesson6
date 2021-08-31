@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class CheckoutPage extends BasePage {
 
+    private final static String endpoint = "checkout-step-one.html";
+
     //PageFactory Selectors
     @CacheLookup
     @FindBy(className = "title")
@@ -33,8 +35,6 @@ public class CheckoutPage extends BasePage {
     @CacheLookup
     @FindBy(id = "continue")
     public WebElement continue_Button_By;
-
-    private final static String endpoint = "checkout-step-one.html";
 
     public CheckoutPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);

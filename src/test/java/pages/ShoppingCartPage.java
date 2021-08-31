@@ -5,16 +5,32 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
 public class ShoppingCartPage extends BasePage {
 
     private final static String endpoint = "cart.html";
-    private final static By title_Label_By = By.className("title");
-    private final static By cartItemLabel_By = By.className("cart_item_label");
-    private final static By cart_Badge_By = By.className("shopping_cart_badge");
-    private final static By checkout_Button_By = By.id("checkout");
+
+    //PageFactory Selectors
+    @CacheLookup
+    @FindBy(className = "title")
+    public WebElement title_Label_By;
+
+    @CacheLookup
+    @FindBy(className = "cart_item_label")
+    public List<WebElement> cartItemLabel_By;
+
+    @CacheLookup
+    @FindBy(className = "shopping_cart_badge")
+    public WebElement cart_Badge_By;
+
+    @CacheLookup
+    @FindBy(id = "checkout")
+    public WebElement checkout_Button_By;
+
     private final static String product_AddOrRemoveFromCart_Button = "//div[.='text_to_replace']/ancestor::div[@class='cart_item_label']//button";
 
     public ShoppingCartPage(WebDriver driver, boolean openPageByUrl) {
@@ -29,34 +45,17 @@ public class ShoppingCartPage extends BasePage {
     @Override
     public boolean isPageOpen() {
         try {
-            return getTitleLabel().isDisplayed();
+            return title_Label_By.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
     //Getters
-    public WebElement getTitleLabel() {
-        return driver.findElement(title_Label_By);
-    }
-
-    public List<WebElement> getCartItemLabels() {
-        return driver.findElements(cartItemLabel_By);
-    }
-
-    public WebElement getCartBadge(){
-
-        return driver.findElement(cart_Badge_By);
-    }
 
     public String getCartBadgeText(){
 
-        return getCartBadge().getText();
-    }
-
-    public WebElement getCheckoutButton(){
-
-        return driver.findElement(checkout_Button_By);
+        return cart_Badge_By.getText();
     }
 
     public WebElement getRemoveFromCartProductButton(String productName){
@@ -66,7 +65,7 @@ public class ShoppingCartPage extends BasePage {
 
     public CheckoutPage clickCheckoutButton(){
 
-        getCheckoutButton().click();
+        checkout_Button_By.click();
 
         return new CheckoutPage(driver, false);
     }
