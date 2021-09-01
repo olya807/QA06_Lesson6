@@ -1,52 +1,64 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowsersService;
+import core.ReadProperties;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import wrappers.Button;
+import wrappers.UIElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductsPage extends BasePage {
+    private final static String endpoint = "/inventory.html";
 
-    private final static String endpoint = "inventory.html";
-    private final static By title_Label_By = By.className("title");
-    private final static String product_AddToCart_Button = "//div[.='text_to_replace']/ancestor::div[@class='inventory_item_description']//button";
+    private final static By shoppingCartBtnSelector = By.id("shopping_cart_container");
+    private final static String item_Add_To_Cart_Button = "//div[.='replace']/ancestor::div[@class= 'inventory_item_description']//button";
+    private final static By productsTitle_By = By.xpath("//span[. = 'Products']");
 
-    public ProductsPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public ProductsPage(BrowsersService browsersService, boolean openPageByUrl) {
+        super(browsersService, openPageByUrl);
     }
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl() + endpoint);
+        browsersService.getDriver().get(ReadProperties.getInstance().getURL() + endpoint);
     }
 
     @Override
-    public boolean isPageOpen() {
+    public boolean isPageOpened() {
+        return getProductsTitle().isDisplayed();
+    }
 
-        try {
-            return getTitleLabel().isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
+    public Button getItemAddToCartButton(String productName) {
+        return new Button(browsersService, By.xpath(item_Add_To_Cart_Button.replace("replace", productName)));
+    }
+
+    public UIElement getCartBadge() {
+        return new UIElement(browsersService, shoppingCartBtnSelector);
+    }
+
+    public UIElement getProductsTitle() {
+        return new UIElement(browsersService, productsTitle_By);
+    }
+
+
+    // Атомарные методы
+    public ProductsPage addItemToCart(String productName) {
+        getItemAddToCartButton(productName).click();
+        return this;
+    }
+
+    public ProductsPage addItemsToCart(List<String> itemsList) {
+        for (String item : itemsList) {
+            getItemAddToCartButton(item).click();
         }
+        return this;
     }
 
-    //Getters
-    public WebElement getTitleLabel() {
-        return driver.findElement(title_Label_By);
-    }
-
-    public String getTitleText() {
-        return getTitleLabel().getText();
-    }
-
-    public WebElement getAddToCartButtonForProduct(String productName){
-
-        return driver.findElement(By.xpath(product_AddToCart_Button.replace("text_to_replace", productName)));
-    }
-
-    public void addToCart(String productName){
-
-        getAddToCartButtonForProduct(productName).click();
+    public ShoppingCartPage cartBadgeClick() {
+        getCartBadge().click();
+        return new ShoppingCartPage(browsersService, false);
     }
 }

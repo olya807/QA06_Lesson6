@@ -1,69 +1,69 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.BrowsersService;
+import core.ReadProperties;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import wrappers.Button;
+import wrappers.Input;
+import wrappers.UIElement;
 
 public class LoginPage extends BasePage {
+    private final static String endpoint = "/";
 
-    //Selectors
-    private final static By username_Input_By = By.id("user-name");
-    private final static By password_Input_By = By.id("password");
-    private final static By login_Button_By = By.id("login-button");
-    private final static By error_Label_By = By.tagName("h3");
+    private final static By usernameSelector = By.id("user-name");
+    private final static By passwordSelector = By.id("password");
+    private final static By loginBtnSelector = By.id("login-button");
+    private final static By errorMessageSelector = By.cssSelector(".error-message-container.error h3");
 
-    //Constructors
-
-    public LoginPage(WebDriver driver, boolean openPageByUrl) {
-        super(driver, openPageByUrl);
+    public LoginPage(BrowsersService browsersService, boolean openPageByUrl) {
+        super(browsersService, openPageByUrl);
     }
 
     @Override
     protected void openPage() {
-        driver.get(properties.getUrl());
+        browsersService.getDriver().get(ReadProperties.getInstance().getURL() + endpoint);
     }
 
     @Override
-    public boolean isPageOpen() {
-
-        try {
-            return getLoginButtonBy().isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    public boolean isPageOpened() {
+        return new UIElement(browsersService, loginBtnSelector).isDisplayed();
     }
 
-    //Getters
-
-    public WebElement getUsernameInputBy() {
-        return driver.findElement(username_Input_By);
+    public Input getUsernameField() {
+        return new Input(browsersService, usernameSelector);
     }
 
-    public WebElement getPasswordInputBy() {
-        return driver.findElement(password_Input_By);
+    public Input getPasswordField() {
+        return new Input(browsersService, passwordSelector);
     }
 
-    public WebElement getLoginButtonBy() {
-        return driver.findElement(login_Button_By);
+    public Button getLoginButton() {
+        return new Button(browsersService, loginBtnSelector);
     }
 
-    public WebElement getErrorLabel() {
-        return driver.findElement(error_Label_By);
+    public UIElement getErrorMessage() {
+        return new UIElement(browsersService, errorMessageSelector);
     }
 
-
-    //Atomic methods for work with elements
-    public void setUserName(String userName) {
-        getUsernameInputBy().sendKeys(userName);
+    // Атомарные методы
+    public LoginPage setUsername(String username) {
+        getUsernameField().sendKeys(username);
+        return this;
     }
 
-    public void setPassword(String password) {
-        getPasswordInputBy().sendKeys(password);
+    public LoginPage setPassword(String password) {
+        getPasswordField().sendKeys(password);
+        return this;
     }
 
-    public void clickLoginButton() {
-        getLoginButtonBy().click();
+    public LoginPage loginBtnClick() {
+        getLoginButton().click();
+        return this;
+    }
+
+    public ProductsPage successLoginBtnClick() {
+        loginBtnClick();
+        return new ProductsPage(browsersService, false);
     }
 }
