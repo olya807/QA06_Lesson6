@@ -39,4 +39,16 @@ public final class ReadProperties {
     public int getTimeOut() {
         return Integer.parseInt(properties.getProperty("timeout"));
     }
+
+    public String getTestRailUrl() {
+        return properties.getProperty("testrail_url");
+    }
+
+    public String getApiUsername() {
+        return properties.getProperty("api_username");
+    }
+
+    public String getApiPassword() {
+        return properties.getProperty("api_password");
+    }
 }
